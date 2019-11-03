@@ -1,8 +1,8 @@
-import * as Phaser from "phaser";
-import Scenes from "./scenes";
+import * as Phaser from 'phaser';
+import Scenes from './scenes';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
-  title: "Dwarf Quest",
+  title: 'Dwarf Quest',
 
   type: Phaser.AUTO,
 
@@ -12,18 +12,23 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   scene: Scenes,
 
   physics: {
-    default: "arcade",
+    default: 'arcade',
     arcade: {
-      debug: true
-    }
+      debug: true,
+    },
   },
 
-  parent: "game",
-  backgroundColor: "#000000"
+  parent: 'game',
+  backgroundColor: '#000000',
 };
 
-export const game = new Phaser.Game(gameConfig);
+const game = new Phaser.Game(gameConfig);
 
-window.addEventListener("resize", () => {
+
+// eslint-disable-next-line no-undef
+window.addEventListener('resize', () => {
+  // eslint-disable-next-line no-undef
   game.scale.resize(window.innerWidth, window.innerHeight);
 });
+
+export default game;

@@ -1,34 +1,36 @@
+import * as Phaser from 'phaser';
+
 const buttonRestStyle = {
-  color: "#FFFFFF"
+  color: '#FFFFFF',
 };
 
 const buttonHoverStyle = {
-  color: "#7CFC00"
+  color: '#7CFC00',
 };
 
 const buttonActiveStyle = {
-  color: "#000000"
+  color: '#000000',
 };
 
-export class MenuButton extends Phaser.GameObjects.Text {
+export default class MenuButton extends Phaser.GameObjects.Text {
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     text: string,
-    onClick?: () => void
+    onClick?: () => void,
   ) {
     super(scene, x, y, text, buttonRestStyle);
     scene.add.existing(this);
 
     this.setInteractive({ useHandCursor: true })
-      .on("pointerover", this.enterMenuButtonHoverState)
-      .on("pointerout", this.enterMenuButtonRestState)
-      .on("pointerdown", this.enterMenuButtonActiveState)
-      .on("pointerup", this.enterMenuButtonHoverState);
+      .on('pointerover', this.enterMenuButtonHoverState)
+      .on('pointerout', this.enterMenuButtonRestState)
+      .on('pointerdown', this.enterMenuButtonActiveState)
+      .on('pointerup', this.enterMenuButtonHoverState);
 
     if (onClick) {
-      this.on("pointerup", onClick);
+      this.on('pointerup', onClick);
     }
   }
 

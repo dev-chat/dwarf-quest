@@ -1,3 +1,5 @@
+import * as Phaser from 'phaser';
+
 const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   active: false,
   visible: false,
@@ -8,18 +10,14 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
 /**
  * The initial scene that loads all necessary assets to the game and displays a loading bar.
  */
-export class BootScene extends Phaser.Scene {
+export default class BootScene extends Phaser.Scene {
   constructor() {
     super(sceneConfig);
   }
 
-  private getGameWidth = () => {
-    return this.game.scale.width;
-  };
+  private getGameWidth = () => this.game.scale.width;
 
-  private getGameHeight = () => {
-    return this.game.scale.height;
-  };
+  private getGameHeight = () => this.game.scale.height;
 
   public preload() {
     const halfWidth = this.getGameWidth() * 0.5;
@@ -28,8 +26,20 @@ export class BootScene extends Phaser.Scene {
     const progressBarHeight = 100;
     const progressBarWidth = 400;
 
-    const progressBarContainer = this.add.rectangle(halfWidth, halfHeight, progressBarWidth, progressBarHeight, 0x000000);
-    const progressBar = this.add.rectangle(halfWidth + 20 - progressBarContainer.width * 0.5, halfHeight, 10, progressBarHeight - 20, 0x888888);
+    const progressBarContainer = this.add.rectangle(
+      halfWidth,
+      halfHeight,
+      progressBarWidth,
+      progressBarHeight,
+      0x000000,
+    );
+
+    const progressBar = this.add.rectangle(
+      halfWidth + 20 - progressBarContainer.width * 0.5,
+      halfHeight, 10,
+      progressBarHeight - 20,
+      0x888888,
+    );
 
     const loadingText = this.add.text(halfWidth - 75, halfHeight - 100, 'Loading...').setFontSize(24);
     const percentText = this.add.text(halfWidth - 25, halfHeight, '0%').setFontSize(24);
@@ -61,8 +71,8 @@ export class BootScene extends Phaser.Scene {
 
   /**
    * All assets that need to be loaded by the game (sprites, images, animations, tiles, music, etc)
-   * should be added to this method. Once loaded in, the loader will keep track of them, indepedent of which scene
-   * is currently active, so they can be accessed anywhere.
+   * should be added to this method. Once loaded in, the loader will keep track of them,
+   * indepedent of which scene is currently active, so they can be accessed anywhere.
    */
   private loadAssets() {
     // Load sample assets
