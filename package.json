@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "lint:fix": "eslint --ignore-path .gitignore . --fix",
+    "lint": "eslint --ignore-path .gitignore ."
   },
   "husky": {
     "hooks": {
@@ -15,7 +17,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "eslint --ignore-path .gitignore . --fix",
+      "npm run lint",
       "git add"
     ]
   },
@@ -37,10 +39,8 @@
     "@typescript-eslint/parser": "^2.6.0",
     "copy-webpack-plugin": "^5.0.4",
     "eslint": "^6.6.0",
-    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "lint-staged": "^9.4.2",
