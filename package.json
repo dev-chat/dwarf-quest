@@ -1,0 +1,35 @@
+{
+  "name": "dwarf-quest",
+  "version": "0.0.1",
+  "description": "dwarves",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-chat/dwarf-quest.git"
+  },
+  "keywords": [
+    "dwarves"
+  ],
+  "author": "dwarves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dev-chat/dwarf-quest/issues"
+  },
+  "homepage": "https://github.com/dev-chat/dwarf-quest#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.0.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "phaser": "^3.20.1"
+  }
+}
