@@ -4,24 +4,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: './src/main.ts',
+    app: './src/main.js',
     vendors: ['phaser'],
   },
 
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-
-  devtool: 'inline-source-map',
-
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.js'],
   },
 
   output: {
