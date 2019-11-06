@@ -16,6 +16,7 @@ function create() {
   // We can combine layers here to create multi layer levels
   const worldLayer = map.createStaticLayer("Tile Layer 1", tileset, 0, 0);
 
+<<<<<<< HEAD
   worldLayer.setCollisionByProperty({ collides: true });
 
   const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -25,6 +26,8 @@ function create() {
     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
   });
 
+=======
+>>>>>>> 0b64fce89bff0e5ff6768260bdde5238868ec55d
   const camera = this.cameras.main;
 
   // Set up the arrows to control the camera
@@ -40,6 +43,19 @@ function create() {
 
   // Constrain the camera so that it isn't allowed to move outside the width/height of tilemap
   camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+<<<<<<< HEAD
+=======
+
+  // Help text that has a "fixed" position on the screen
+  this.add
+    .text(500, 16, "Arrow keys to scroll", {
+      font: "18px monospace",
+      fill: "#ffffff",
+      padding: { x: 20, y: 10 },
+      backgroundColor: "#000000"
+    })
+    .setScrollFactor(0);
+>>>>>>> 0b64fce89bff0e5ff6768260bdde5238868ec55d
 }
 
 function update(time, delta) {
