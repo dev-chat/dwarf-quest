@@ -6,24 +6,18 @@ let hero;
 function preload() {
   this.load.image('tiles', '../assets/tilesets/cave.png');
   this.load.tilemapTiledJSON('map', '../assets/tilemaps/cave.json');
-}
-
-function heroMove(cursorPosition, game) {
-  console.log(`cursorPosition X = ${cursorPosition.x}`);
-  console.log(`cursorPosition Y = ${cursorPosition.y}`);
-
-  game.physics.moveToObject(hero, cursorPosition, 240);
+  this.load.image('dwarf', '../assets/sprites/dwarf.jpeg');
 }
 
 function heroCreate(game) {
-  const rectangle = new Phaser.Geom.Rectangle(0, 0, 16, 16);
-  const graphics = game.add.graphics({ fillStyle: { color: 0x0000ff } });
-
-  graphics.fillRectShape(rectangle);
-
-  hero = rectangle;
+  hero = game.physics.add.image(0, 0, 'dwarf');
+  hero.width = 10;
+  hero.height = 10;
   game.input.on('pointerdown', (pointer) => {
-    heroMove(pointer, game);
+    console.log(`cursorPosition X = ${pointer.x}`);
+    console.log(`cursorPosition Y = ${pointer.y}`);
+
+    game.physics.moveToObject(hero, pointer, 240);
   });
 }
 
