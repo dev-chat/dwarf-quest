@@ -12,10 +12,7 @@ function heroMove(cursorPosition, game) {
   console.log(`cursorPosition X = ${cursorPosition.x}`);
   console.log(`cursorPosition Y = ${cursorPosition.y}`);
 
-  //  300 = 300 pixels per second = the speed the sprite will move at, regardless of the distance it has to travel
-  // const duration = (game.physics.distanceToXY(hero, cursorPosition.x, cursorPosition.y) / 300) * 1000;
   game.physics.moveToObject(hero, cursorPosition, 240);
-  // game.add.tween(hero.body).to({ x: cursorPosition.x, y: cursorPosition.y }, duration, Phaser.Easing.Linear.None, true);
 }
 
 function heroCreate(game) {
@@ -38,7 +35,7 @@ function create() {
   const tileset = map.addTilesetImage('cave', 'tiles');
 
   // We can combine layers here to create multi layer levels
-  const worldLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
+  map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
 
   worldLayer.setCollisionByProperty({ collides: true });
 
