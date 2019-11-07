@@ -7,7 +7,6 @@ import dwarf from './assets/sprites/dwarf_sprite.png';
 
 let player;
 const playerTargetPos = new Phaser.Math.Vector2();
-let distanceText;
 
 // const showDebug = false;
 
@@ -49,21 +48,20 @@ function create() {
   // Watch the player and worldLayer for collisions, for the duration of the scene:
   this.physics.add.collider(player, worldLayer);
 
+  // When someone clicks within our game...
   this.input.on('pointerup', (pointer) => {
-    console.log(pointer);
+    // Set the target position.
     playerTargetPos.x = pointer.worldX;
     playerTargetPos.y = pointer.worldY;
 
-    console.log(playerTargetPos);
+    // Move the player to that target position at 120px/s
     this.physics.moveToObject(player, playerTargetPos, 120);
 
+    // show a line indicating where he will be going
     debug.clear().lineStyle(1, 0x00ff00);
     debug.lineBetween(0, playerTargetPos.y, 800, playerTargetPos.y);
     debug.lineBetween(playerTargetPos.x, 0, playerTargetPos.x, 600);
   });
-
-  distanceText = this.add.text(10, 10, 'Click to see target', { fill: '#00ff00' });
-
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
   const { anims } = this;
@@ -118,75 +116,24 @@ function create() {
 }
 
 function update() {
-  const distance = Phaser.Math.Distance.Between(player.x, player.y, playerTargetPos.x, playerTargetPos.y);
+  const distance = Phaser.Math.Distance.Between(
+    player.x,
+    player.y,
+    playerTargetPos.x,
+    playerTargetPos.y,
+  );
 
   if (player.body.speed > 0) {
-    if (distance < 50) {
-      distanceText.setText(`Distance: ${distance}`);
-    }
-    if (distance < 10) {
+    if (distance < 5) {
       player.body.reset(playerTargetPos.x, playerTargetPos.y);
       player.body.setVelocity(0);
     }
   }
-  // const speed = 1000;
-  // const prevVelocity = player.body.velocity.clone();
-
-  // Stop any previous movement from the last frame
-  // player.body.setVelocity(0);
-  // if (mouse.isDown) {
-  //   console.log(mouse);
-  //   xDelta = prevX - mouse.position.x;
-  //   yDelta = prevY - mouse.position.y;
-  //   console.log('xDelta', xDelta);
-  //   console.log('yDelta', yDelta);
-  //   console.log(player);
-
-  //   this.physics.moveToObject(player, mouse.position, 120);
-
-  // if (yDelta < 0) {
-  //   // moving down
-  //   player.body.setVelocityY(speed);
-  // } else if (yDelta > 0) {
-  //   // moving up
-  //   player.body.setVelocityY(-speed);
-  // } else if (xDelta < 0) {
-  //   // moving left
-  //   console.log('moving left');
-  //   player.body.setVelocityX(speed);
-  // } else if (xDelta > 0) {
-  //   // moving right
-  //   console.log('moving right');
-  //   player.body.setVelocityX(-speed);
-  // } else if (xDelta > 0 && yDelta > 0) {
-  //   // moving up and to the right
-  //   player.body.setVelocityX(-speed);
-  //   player.body.setVelocityY(-speed);
-  // }
-
-  // player.body.velocity.normalize().scale(speed);
-
-  // prevX = mouse.position.x;
-  // prevY = mouse.position.y;
-
-  // Horizontal movement
-  // if (cursors.left.isDown) {
-  //   player.body.setVelocityX(-speed);
-  // } else if (cursors.right.isDown) {
-  //   player.body.setVelocityX(speed);
-  // }
-
-  // Vertical movement
-  // if (cursors.up.isDown) {
-  //   player.body.setVelocityY(-speed);
-  // } else if (cursors.down.isDown) {
-  //   player.body.setVelocityY(speed);
-  // }
-
-  // Normalize and scale the velocity so that player can't move faster along a diagonal
-  // player.body.velocity.normalize().scale(speed);
 
   // Update the animation last and give left/right animations precedence over up/down animations
+  // This should be updated to determine direcetion via player and playerTargetPos
+  // x and y coord differences.
+
   // if (cursors.left.isDown) {
   //   // player.anims.play('dwarf-left', true);
   // } else if (cursors.right.isDown) {
