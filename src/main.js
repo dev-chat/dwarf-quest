@@ -1,19 +1,20 @@
 import * as Phaser from 'phaser';
 
+import tiles from './assets/tilesets/cave.png';
+import map from './assets/tilemaps/cave.json';
+import spriteJson from './assets/sprites/dwarf_sprite.json';
+import dwarf from './assets/sprites/dwarf_sprite.png';
+
 let controls;
 let cursors;
 let player;
 let showDebug = false;
 
 function preload() {
-  this.load.image('tiles', './assets/tilesets/cave.png');
-  this.load.tilemapTiledJSON('map', './assets/tilemaps/cave.json');
+  this.load.image('tiles', tiles);
+  this.load.tilemapTiledJSON('map', map);
   // this.load.multiatlas('dwarf', 'assets/sprites/dwarf_sprite.json');
-  this.load.atlas(
-    'dwarf',
-    './assets/sprites/dwarf_sprite.png',
-    './assets/sprites/dwarf_sprite.json'
-  );
+  this.load.atlas('dwarf', dwarf, spriteJson);
 }
 function create() {
   const map = this.make.tilemap({ key: 'map' });
