@@ -6,13 +6,13 @@ let player;
 let showDebug = false;
 
 function preload() {
-  this.load.image('tiles', '../assets/tilesets/cave.png');
-  this.load.tilemapTiledJSON('map', '../assets/tilemaps/cave.json');
+  this.load.image('tiles', './assets/tilesets/cave.png');
+  this.load.tilemapTiledJSON('map', './assets/tilemaps/cave.json');
   // this.load.multiatlas('dwarf', 'assets/sprites/dwarf_sprite.json');
   this.load.atlas(
     'dwarf',
-    '../assets/sprites/dwarf_sprite.png',
-    '../assets/sprites/dwarf_sprite.json'
+    './assets/sprites/dwarf_sprite.png',
+    './assets/sprites/dwarf_sprite.json'
   );
 }
 function create() {
