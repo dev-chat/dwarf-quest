@@ -1,18 +1,19 @@
 import * as Phaser from 'phaser';
 
 import tiles from './assets/tilesets/cave.png';
-import map from './assets/tilemaps/cave.json';
+import cave from './assets/tilemaps/cave.json';
 import spriteJson from './assets/sprites/dwarf_sprite.json';
 import dwarf from './assets/sprites/dwarf_sprite.png';
 
-let controls;
-let cursors;
 let player;
-let showDebug = false;
+const playerTargetPos = new Phaser.Math.Vector2();
+let distanceText;
+
+// const showDebug = false;
 
 function preload() {
   this.load.image('tiles', tiles);
-  this.load.tilemapTiledJSON('map', map);
+  this.load.tilemapTiledJSON('map', cave);
   // this.load.multiatlas('dwarf', 'assets/sprites/dwarf_sprite.json');
   this.load.atlas('dwarf', dwarf, spriteJson);
 }
@@ -32,11 +33,12 @@ function create() {
   // collision shapes. In the tmx file, there's an object layer with a point named "Spawn Point"
 
   // TODO: get this working
-  const spawnPoint = map.findObject(
-    'Object',
-    obj => obj.name === 'Spawn Point'
-  );
+  // const spawnPoint = map.findObject(
+  //   'Object',
+  //   (obj) => obj.name === 'Spawn Point',
+  // );
 
+  const debug = this.add.graphics();
   // Create a sprite with physics enabled via the physics system. The image used for the sprite has
   // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
   player = this.physics.add
@@ -47,103 +49,161 @@ function create() {
   // Watch the player and worldLayer for collisions, for the duration of the scene:
   this.physics.add.collider(player, worldLayer);
 
+  this.input.on('pointerup', (pointer) => {
+    console.log(pointer);
+    playerTargetPos.x = pointer.worldX;
+    playerTargetPos.y = pointer.worldY;
+
+    console.log(playerTargetPos);
+    this.physics.moveToObject(player, playerTargetPos, 120);
+
+    debug.clear().lineStyle(1, 0x00ff00);
+    debug.lineBetween(0, playerTargetPos.y, 800, playerTargetPos.y);
+    debug.lineBetween(playerTargetPos.x, 0, playerTargetPos.x, 600);
+  });
+
+  distanceText = this.add.text(10, 10, 'Click to see target', { fill: '#00ff00' });
+
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
-  const anims = this.anims;
+  const { anims } = this;
   anims.create({
     key: 'dwarf-left',
     frames: anims.generateFrameNames('dwarf-left', {
-      prefix: 'dwarf-left.',
+      prefix: 'dwarf-left',
       start: 0,
       end: 3,
-      zeroPad: 3
+      zeroPad: 3,
     }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
   anims.create({
     key: 'dwarf-right',
     frames: anims.generateFrameNames('dwarf', {
-      prefix: 'dwarf-right.',
+      prefix: 'dwarf-right',
       start: 0,
       end: 3,
-      zeroPad: 3
+      zeroPad: 3,
     }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
   anims.create({
     key: 'dwarf-front-walk',
     frames: anims.generateFrameNames('dwarf', {
-      prefix: 'dwarf-front-walk.',
+      prefix: 'dwarf-front-walk',
       start: 0,
       end: 3,
-      zeroPad: 3
+      zeroPad: 3,
     }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
   anims.create({
     key: 'dwarf-back',
     frames: anims.generateFrameNames('dwarf', {
-      prefix: 'dwarf-back.',
+      prefix: 'dwarf-back',
       start: 0,
       end: 3,
-      zeroPad: 3
+      zeroPad: 3,
     }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
 
   const camera = this.cameras.main;
   camera.startFollow(player);
   camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-  cursors = this.input.keyboard.createCursorKeys();
 }
 
-function update(time, delta) {
-  const speed = 175;
-  const prevVelocity = player.body.velocity.clone();
+function update() {
+  const distance = Phaser.Math.Distance.Between(player.x, player.y, playerTargetPos.x, playerTargetPos.y);
+
+  if (player.body.speed > 0) {
+    if (distance < 50) {
+      distanceText.setText(`Distance: ${distance}`);
+    }
+    if (distance < 10) {
+      player.body.reset(playerTargetPos.x, playerTargetPos.y);
+      player.body.setVelocity(0);
+    }
+  }
+  // const speed = 1000;
+  // const prevVelocity = player.body.velocity.clone();
 
   // Stop any previous movement from the last frame
-  player.body.setVelocity(0);
+  // player.body.setVelocity(0);
+  // if (mouse.isDown) {
+  //   console.log(mouse);
+  //   xDelta = prevX - mouse.position.x;
+  //   yDelta = prevY - mouse.position.y;
+  //   console.log('xDelta', xDelta);
+  //   console.log('yDelta', yDelta);
+  //   console.log(player);
+
+  //   this.physics.moveToObject(player, mouse.position, 120);
+
+  // if (yDelta < 0) {
+  //   // moving down
+  //   player.body.setVelocityY(speed);
+  // } else if (yDelta > 0) {
+  //   // moving up
+  //   player.body.setVelocityY(-speed);
+  // } else if (xDelta < 0) {
+  //   // moving left
+  //   console.log('moving left');
+  //   player.body.setVelocityX(speed);
+  // } else if (xDelta > 0) {
+  //   // moving right
+  //   console.log('moving right');
+  //   player.body.setVelocityX(-speed);
+  // } else if (xDelta > 0 && yDelta > 0) {
+  //   // moving up and to the right
+  //   player.body.setVelocityX(-speed);
+  //   player.body.setVelocityY(-speed);
+  // }
+
+  // player.body.velocity.normalize().scale(speed);
+
+  // prevX = mouse.position.x;
+  // prevY = mouse.position.y;
 
   // Horizontal movement
-  if (cursors.left.isDown) {
-    player.body.setVelocityX(-speed);
-  } else if (cursors.right.isDown) {
-    player.body.setVelocityX(speed);
-  }
+  // if (cursors.left.isDown) {
+  //   player.body.setVelocityX(-speed);
+  // } else if (cursors.right.isDown) {
+  //   player.body.setVelocityX(speed);
+  // }
 
   // Vertical movement
-  if (cursors.up.isDown) {
-    player.body.setVelocityY(-speed);
-  } else if (cursors.down.isDown) {
-    player.body.setVelocityY(speed);
-  }
+  // if (cursors.up.isDown) {
+  //   player.body.setVelocityY(-speed);
+  // } else if (cursors.down.isDown) {
+  //   player.body.setVelocityY(speed);
+  // }
 
   // Normalize and scale the velocity so that player can't move faster along a diagonal
-  player.body.velocity.normalize().scale(speed);
+  // player.body.velocity.normalize().scale(speed);
 
   // Update the animation last and give left/right animations precedence over up/down animations
-  if (cursors.left.isDown) {
-    // player.anims.play('dwarf-left', true);
-  } else if (cursors.right.isDown) {
-    // player.anims.play('dwarf-right', true);
-  } else if (cursors.up.isDown) {
-    // player.anims.play('dwarf-back', true);
-  } else if (cursors.down.isDown) {
-    // player.anims.play('dwarf-front', true);
-  } else {
-    player.anims.stop();
-  }
+  // if (cursors.left.isDown) {
+  //   // player.anims.play('dwarf-left', true);
+  // } else if (cursors.right.isDown) {
+  //   // player.anims.play('dwarf-right', true);
+  // } else if (cursors.up.isDown) {
+  //   // player.anims.play('dwarf-back', true);
+  // } else if (cursors.down.isDown) {
+  //   // player.anims.play('dwarf-front', true);
+  // } else {
+  //   player.anims.stop();
+  // }
 
-  // If we were moving, pick and idle frame to use
-  if (prevVelocity.x < 0) player.setTexture('dwarf', 'dwarf-left');
-  else if (prevVelocity.x > 0) player.setTexture('dwarf', 'dwarf-right');
-  else if (prevVelocity.y < 0) player.setTexture('dwarf', 'dwarf-back');
-  else if (prevVelocity.y > 0) player.setTexture('dwarf', 'dwarf-front');
+  // // If we were moving, pick and idle frame to use
+  // if (prevVelocity.x < 0) player.setTexture('dwarf', 'dwarf-left');
+  // else if (prevVelocity.x > 0) player.setTexture('dwarf', 'dwarf-right');
+  // else if (prevVelocity.y < 0) player.setTexture('dwarf', 'dwarf-back');
+  // else if (prevVelocity.y > 0) player.setTexture('dwarf', 'dwarf-front');
 }
 
 const config = {
@@ -155,14 +215,14 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 0 }
-    }
+      gravity: { y: 0 },
+    },
   },
   scene: {
     preload,
     create,
-    update
-  }
+    update,
+  },
 };
 
 const game = new Phaser.Game(config);
