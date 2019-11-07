@@ -1,18 +1,18 @@
 import * as Phaser from 'phaser';
 
 import tiles from './assets/tilesets/cave.png';
-import map from './assets/tilemaps/cave.json';
+import cave from './assets/tilemaps/cave.json';
 import spriteJson from './assets/sprites/dwarf_sprite.json';
 import dwarf from './assets/sprites/dwarf_sprite.png';
 
-let controls;
-let cursors;
 let player;
-let showDebug = false;
+const playerTargetPos = new Phaser.Math.Vector2();
+
+// const showDebug = false;
 
 function preload() {
   this.load.image('tiles', tiles);
-  this.load.tilemapTiledJSON('map', map);
+  this.load.tilemapTiledJSON('map', cave);
   // this.load.multiatlas('dwarf', 'assets/sprites/dwarf_sprite.json');
   this.load.atlas('dwarf', dwarf, spriteJson);
 }
@@ -32,11 +32,12 @@ function create() {
   // collision shapes. In the tmx file, there's an object layer with a point named "Spawn Point"
 
   // TODO: get this working
-  const spawnPoint = map.findObject(
-    'Object',
-    obj => obj.name === 'Spawn Point'
-  );
+  // const spawnPoint = map.findObject(
+  //   'Object',
+  //   (obj) => obj.name === 'Spawn Point',
+  // );
 
+  const debug = this.add.graphics();
   // Create a sprite with physics enabled via the physics system. The image used for the sprite has
   // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
   player = this.physics.add
@@ -47,19 +48,33 @@ function create() {
   // Watch the player and worldLayer for collisions, for the duration of the scene:
   this.physics.add.collider(player, worldLayer);
 
+  // When someone clicks within our game...
+  this.input.on('pointerup', (pointer) => {
+    // Set the target position.
+    playerTargetPos.x = pointer.worldX;
+    playerTargetPos.y = pointer.worldY;
+
+    // Move the player to that target position at 120px/s
+    this.physics.moveToObject(player, playerTargetPos, 120);
+
+    // show a line indicating where he will be going
+    debug.clear().lineStyle(1, 0x00ff00);
+    debug.lineBetween(0, playerTargetPos.y, 800, playerTargetPos.y);
+    debug.lineBetween(playerTargetPos.x, 0, playerTargetPos.x, 600);
+  });
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
-  const anims = this.anims;
+  const { anims } = this;
   anims.create({
     key: 'dwarf-left',
     frames: anims.generateFrameNames('dwarf-left', {
       prefix: 'dwarf-left.',
       start: 0,
       end: 3,
-      zeroPad: 3
+      zeroPad: 3,
     }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
   anims.create({
     key: 'dwarf-right',
@@ -67,10 +82,10 @@ function create() {
       prefix: 'dwarf-right.',
       start: 0,
       end: 3,
-      zeroPad: 3
+      zeroPad: 3,
     }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
   anims.create({
     key: 'dwarf-front-walk',
@@ -78,10 +93,10 @@ function create() {
       prefix: 'dwarf-front-walk.',
       start: 0,
       end: 3,
-      zeroPad: 3
+      zeroPad: 3,
     }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
   anims.create({
     key: 'dwarf-back',
@@ -89,61 +104,57 @@ function create() {
       prefix: 'dwarf-back.',
       start: 0,
       end: 3,
-      zeroPad: 3
+      zeroPad: 3,
     }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
 
   const camera = this.cameras.main;
   camera.startFollow(player);
   camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-  cursors = this.input.keyboard.createCursorKeys();
 }
 
-function update(time, delta) {
-  const speed = 175;
-  const prevVelocity = player.body.velocity.clone();
+function update() {
+  const distance = Phaser.Math.Distance.Between(
+    player.x,
+    player.y,
+    playerTargetPos.x,
+    playerTargetPos.y,
+  );
 
-  // Stop any previous movement from the last frame
-  player.body.setVelocity(0);
-
-  // Horizontal movement
-  if (cursors.left.isDown) {
-    player.body.setVelocityX(-speed);
-  } else if (cursors.right.isDown) {
-    player.body.setVelocityX(speed);
+  // If the player is moving
+  if (player.body.speed > 0) {
+    // Check whether or not he is within 5px of the target
+    // If so, place him in his target position and make him stop moving.
+    // http://labs.phaser.io/edit.html?src=src/physics/arcade/move%20and%20stop%20at%20position.js
+    if (distance < 5) {
+      player.body.reset(playerTargetPos.x, playerTargetPos.y);
+      player.body.setVelocity(0);
+    }
   }
-
-  // Vertical movement
-  if (cursors.up.isDown) {
-    player.body.setVelocityY(-speed);
-  } else if (cursors.down.isDown) {
-    player.body.setVelocityY(speed);
-  }
-
-  // Normalize and scale the velocity so that player can't move faster along a diagonal
-  player.body.velocity.normalize().scale(speed);
 
   // Update the animation last and give left/right animations precedence over up/down animations
-  if (cursors.left.isDown) {
-    // player.anims.play('dwarf-left', true);
-  } else if (cursors.right.isDown) {
-    // player.anims.play('dwarf-right', true);
-  } else if (cursors.up.isDown) {
-    // player.anims.play('dwarf-back', true);
-  } else if (cursors.down.isDown) {
-    // player.anims.play('dwarf-front', true);
-  } else {
-    player.anims.stop();
-  }
+  // This should be updated to determine direcetion via player and playerTargetPos
+  // x and y coord differences.
 
-  // If we were moving, pick and idle frame to use
-  if (prevVelocity.x < 0) player.setTexture('dwarf', 'dwarf-left');
-  else if (prevVelocity.x > 0) player.setTexture('dwarf', 'dwarf-right');
-  else if (prevVelocity.y < 0) player.setTexture('dwarf', 'dwarf-back');
-  else if (prevVelocity.y > 0) player.setTexture('dwarf', 'dwarf-front');
+  // if (cursors.left.isDown) {
+  //   // player.anims.play('dwarf-left', true);
+  // } else if (cursors.right.isDown) {
+  //   // player.anims.play('dwarf-right', true);
+  // } else if (cursors.up.isDown) {
+  //   // player.anims.play('dwarf-back', true);
+  // } else if (cursors.down.isDown) {
+  //   // player.anims.play('dwarf-front', true);
+  // } else {
+  //   player.anims.stop();
+  // }
+
+  // // If we were moving, pick and idle frame to use
+  // if (prevVelocity.x < 0) player.setTexture('dwarf', 'dwarf-left');
+  // else if (prevVelocity.x > 0) player.setTexture('dwarf', 'dwarf-right');
+  // else if (prevVelocity.y < 0) player.setTexture('dwarf', 'dwarf-back');
+  // else if (prevVelocity.y > 0) player.setTexture('dwarf', 'dwarf-front');
 }
 
 const config = {
@@ -155,14 +166,14 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 0 }
-    }
+      gravity: { y: 0 },
+    },
   },
   scene: {
     preload,
     create,
-    update
-  }
+    update,
+  },
 };
 
 const game = new Phaser.Game(config);
