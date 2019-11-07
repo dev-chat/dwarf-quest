@@ -123,7 +123,11 @@ function update() {
     playerTargetPos.y,
   );
 
+  // If the player is moving
   if (player.body.speed > 0) {
+    // Check whether or not he is within 5px of the target
+    // If so, place him in his target position and make him stop moving.
+    // http://labs.phaser.io/edit.html?src=src/physics/arcade/move%20and%20stop%20at%20position.js
     if (distance < 5) {
       player.body.reset(playerTargetPos.x, playerTargetPos.y);
       player.body.setVelocity(0);
