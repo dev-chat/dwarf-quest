@@ -20,7 +20,7 @@
       "color": "#640000",
       "draworder": "topdown",
       "id": 2,
-      "name": "Object",
+      "name": "Object Layer 1",
       "objects": [
         {
           "height": 0,
@@ -58,7 +58,7 @@
     {
       "columns": 16,
       "firstgid": 1,
-      "image": "../tilesets/cave.png",
+      "image": "../Downloads/cave.png",
       "imageheight": 336,
       "imagewidth": 256,
       "margin": 0,
