@@ -68,7 +68,7 @@ function create() {
   anims.create({
     key: 'dwarf-left',
     frames: anims.generateFrameNames('dwarf-left', {
-      prefix: 'dwarf-left',
+      prefix: 'dwarf-left.',
       start: 0,
       end: 3,
       zeroPad: 3,
@@ -79,7 +79,7 @@ function create() {
   anims.create({
     key: 'dwarf-right',
     frames: anims.generateFrameNames('dwarf', {
-      prefix: 'dwarf-right',
+      prefix: 'dwarf-right.',
       start: 0,
       end: 3,
       zeroPad: 3,
@@ -90,7 +90,7 @@ function create() {
   anims.create({
     key: 'dwarf-front-walk',
     frames: anims.generateFrameNames('dwarf', {
-      prefix: 'dwarf-front-walk',
+      prefix: 'dwarf-front-walk.',
       start: 0,
       end: 3,
       zeroPad: 3,
@@ -101,7 +101,7 @@ function create() {
   anims.create({
     key: 'dwarf-back',
     frames: anims.generateFrameNames('dwarf', {
-      prefix: 'dwarf-back',
+      prefix: 'dwarf-back.',
       start: 0,
       end: 3,
       zeroPad: 3,
