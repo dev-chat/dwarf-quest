@@ -1,3 +1,0 @@
-# dwarf-quest
-
-Dwarf Game
