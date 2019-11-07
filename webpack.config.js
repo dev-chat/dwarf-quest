@@ -13,7 +13,10 @@ module.exports = {
   },
 
   output: {
-    filename: 'app.bundle.[hash].js',
+    filename:
+      process.env.NODE_ENV === 'production'
+        ? 'app.bundle.[hash].js'
+        : 'app.bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
 
@@ -45,10 +48,6 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, 'index.html'),
-        to: path.resolve(__dirname, 'dist')
-      },
-      {
-        from: path.resolve(__dirname, 'assets', '**', '*'),
         to: path.resolve(__dirname, 'dist')
       }
     ]),
