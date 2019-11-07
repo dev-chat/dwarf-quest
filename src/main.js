@@ -29,7 +29,7 @@ function create() {
   const tileset = map.addTilesetImage('cave', 'tiles');
 
   // We can combine layers here to create multi layer levels
-  map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
+  const worldLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
 
   worldLayer.setCollisionByProperty({ collides: true });
 
