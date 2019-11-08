@@ -36,21 +36,19 @@ class Cave extends Phaser.Scene {
     // Watch the player and worldLayer for collisions, for the duration of the scene:
     this.physics.add.collider(this.player, worldLayer);
 
-    setTimeout(() => {
-      // When someone clicks within our game...
-      this.input.on('pointerup', pointer => {
-        // Set the target position.
-        PLAYER_TARGET_POS.x = pointer.worldX;
-        PLAYER_TARGET_POS.y = pointer.worldY;
+    // When someone clicks within our game...
+    this.input.on('pointerdown', pointer => {
+      // Set the target position.
+      PLAYER_TARGET_POS.x = pointer.worldX;
+      PLAYER_TARGET_POS.y = pointer.worldY;
 
-        // Move the player to that target position at 120px/s
-        this.physics.moveToObject(this.player, PLAYER_TARGET_POS, 120);
-        // show a line indicating where he will be going
-        debug.clear().lineStyle(1, 0x00ff00);
-        debug.lineBetween(0, PLAYER_TARGET_POS.y, 800, PLAYER_TARGET_POS.y);
-        debug.lineBetween(PLAYER_TARGET_POS.x, 0, PLAYER_TARGET_POS.x, 600);
-      });
-    }, 500);
+      // Move the player to that target position at 120px/s
+      this.physics.moveToObject(this.player, PLAYER_TARGET_POS, 120);
+      // show a line indicating where he will be going
+      debug.clear().lineStyle(1, 0x00ff00);
+      debug.lineBetween(0, PLAYER_TARGET_POS.y, 800, PLAYER_TARGET_POS.y);
+      debug.lineBetween(PLAYER_TARGET_POS.x, 0, PLAYER_TARGET_POS.x, 600);
+    });
 
     const camera = this.cameras.main;
     camera.startFollow(this.player);
