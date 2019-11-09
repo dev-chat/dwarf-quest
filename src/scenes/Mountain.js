@@ -3,9 +3,8 @@ import Dwarf from '../characters/Dwarf';
 import { PLAYER_TARGET_POS } from '../constants';
 
 class Mountain extends Phaser.Scene {
-  constructor(data) {
+  constructor() {
     super('mountain');
-    console.log(data);
   }
 
   init() {}
@@ -14,8 +13,6 @@ class Mountain extends Phaser.Scene {
 
   create() {
     const map = this.make.tilemap({ key: 'mountain' });
-
-    console.log({ map });
 
     // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
     // Phaser's cache (i.e. the name you used in preload)

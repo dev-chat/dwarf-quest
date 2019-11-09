@@ -11,7 +11,6 @@ class Cave extends Phaser.Scene {
   }
 
   init(data) {
-    console.log(data);
     if (data) {
       if (data.fromMountain) {
         this.startingDwarfPositionX = 400;
