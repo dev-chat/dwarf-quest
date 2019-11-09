@@ -8,7 +8,8 @@
     "build": "webpack",
     "start": "webpack-dev-server",
     "lint:fix": "eslint --ignore-path .gitignore . --fix",
-    "lint": "eslint --ignore-path .gitignore ."
+    "lint": "eslint --ignore-path .gitignore .",
+    "deploy": "./deploy.sh"
   },
   "husky": {
     "hooks": {
@@ -38,11 +39,14 @@
     "copy-webpack-plugin": "^5.0.4",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
     "file-loader": "^4.2.0",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"

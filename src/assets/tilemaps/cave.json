@@ -52,13 +52,13 @@
   "nextobjectid": 2,
   "orientation": "orthogonal",
   "renderorder": "right-down",
-  "tiledversion": "1.2.2",
+  "tiledversion": "1.2.5",
   "tileheight": 16,
   "tilesets": [
     {
       "columns": 16,
       "firstgid": 1,
-      "image": "../Downloads/cave.png",
+      "image": "../tilesets/cave.png",
       "imageheight": 336,
       "imagewidth": 256,
       "margin": 0,
@@ -751,6 +751,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
@@ -761,6 +766,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
@@ -771,6 +781,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
@@ -911,6 +926,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
@@ -921,6 +941,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
@@ -931,6 +956,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
@@ -1071,6 +1101,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
@@ -1081,6 +1116,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
@@ -1091,6 +1131,11 @@
               "name": "collides",
               "type": "bool",
               "value": false
+            },
+            {
+              "name": "exit",
+              "type": "bool",
+              "value": true
             }
           ]
         },
