@@ -3,7 +3,7 @@
  <properties>
   <property name="collides" value=""/>
  </properties>
- <image source="../projects/dwarf-quest/src/assets/tilesets/cave.png" width="256" height="336"/>
+ <image source="./tilesets/cave.png" width="256" height="336"/>
  <tile id="0">
   <properties>
    <property name="collides" type="bool" value="false"/>
