@@ -11,11 +11,9 @@ class Cave extends Phaser.Scene {
   }
 
   init(data) {
-    if (data) {
-      if (data.fromMountain) {
-        this.startingDwarfPositionX = 400;
-        this.startingDwarfPositionY = 150;
-      }
+    if (data && data.fromMountain) {
+      this.startingDwarfPositionX = 400;
+      this.startingDwarfPositionY = 150;
     }
   }
 
