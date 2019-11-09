@@ -36,10 +36,9 @@ class Cave extends Phaser.Scene {
     worldLayer.forEachTile(tile => {
       if (tile.properties.exit) {
         worldLayer.setTileIndexCallback(tile.index, () => {
-          this.scene.start('mountain', { foo: 'bar' });
+          this.scene.start('mountain');
         });
       }
-      // attach the listener here
     });
 
     const debug = this.add.graphics();
