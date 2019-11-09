@@ -39,7 +39,7 @@ class Cave extends Phaser.Scene {
       }
     });
 
-    const debug = this.add.graphics();
+    // const debug = this.add.graphics();
 
     this.player = new Dwarf({
       scene: this,
@@ -61,7 +61,7 @@ class Cave extends Phaser.Scene {
       // Move the player to that target position at 120px/s
       this.physics.moveToObject(this.player, PLAYER_TARGET_POS, 120);
       // show a line indicating where he will be going
-      debug.clear().lineStyle(1, 0x00ff00);
+      // debug.clear().lineStyle(1, 0x00ff00);
       // debug.lineBetween(0, PLAYER_TARGET_POS.y, 800, PLAYER_TARGET_POS.y);
       // debug.lineBetween(PLAYER_TARGET_POS.x, 0, PLAYER_TARGET_POS.x, 600);
     });
