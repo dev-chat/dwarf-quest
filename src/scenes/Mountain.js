@@ -2,41 +2,38 @@ import Phaser from 'phaser';
 import Dwarf from '../characters/Dwarf';
 import { PLAYER_TARGET_POS } from '../constants';
 
-class Cave extends Phaser.Scene {
+class Mountain extends Phaser.Scene {
   constructor() {
-    super('cave');
-
-    this.startingDwarfPositionX = 573;
-    this.startingDwarfPositionY = 376;
+    super('mountain');
   }
 
-  init(data) {
-    if (data && data.fromMountain) {
-      this.startingDwarfPositionX = 400;
-      this.startingDwarfPositionY = 150;
-    }
-  }
+  init() {}
 
   preload() {}
 
   create() {
-    const map = this.make.tilemap({ key: 'map' });
+    const map = this.make.tilemap({ key: 'mountain' });
 
     // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
     // Phaser's cache (i.e. the name you used in preload)
-    const tileset = map.addTilesetImage('cave', 'tiles');
+    const tileset = map.addTilesetImage('mountain', 'mountainTiles');
 
-    // We can combine layers here to create multi layer levels
-    const worldLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
+    // // We can combine layers here to create multi layer levels
+    // const worldLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
+
+    const belowLayer = map.createStaticLayer('Ground', tileset, 0, 0);
+    const worldLayer = map.createStaticLayer('World', tileset, 0, 0);
 
     worldLayer.setCollisionByProperty({ collides: true });
+    belowLayer.setCollisionByProperty({ collides: true });
 
     worldLayer.forEachTile(tile => {
       if (tile.properties.exit) {
         worldLayer.setTileIndexCallback(tile.index, () => {
-          this.scene.start('mountain');
+          this.scene.start('cave', { fromMountain: true });
         });
       }
+      // attach the listener here
     });
 
     const debug = this.add.graphics();
@@ -45,8 +42,8 @@ class Cave extends Phaser.Scene {
       scene: this,
       key: 'dwarf',
       physics: this.physics,
-      x: this.startingDwarfPositionX,
-      y: this.startingDwarfPositionY
+      x: 400,
+      y: 150
     });
 
     // Watch the player and worldLayer for collisions, for the duration of the scene:
@@ -92,4 +89,4 @@ class Cave extends Phaser.Scene {
   }
 }
 
-export default Cave;
+export default Mountain;

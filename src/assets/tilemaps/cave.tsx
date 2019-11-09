@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.2" name="cave" tilewidth="16" tileheight="16" tilecount="336" columns="16">
+<tileset version="1.2" tiledversion="1.2.5" name="cave" tilewidth="16" tileheight="16" tilecount="336" columns="16">
  <properties>
   <property name="collides" value=""/>
  </properties>
- <image source="../tilesets/cave.png" width="256" height="336"/>
+ <image source="./tilesets/cave.png" width="256" height="336"/>
  <tile id="0">
   <properties>
    <property name="collides" type="bool" value="false"/>
@@ -342,16 +342,19 @@
  <tile id="67">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="68">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="69">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="70">
@@ -422,16 +425,19 @@
  <tile id="83">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="84">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="85">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="86">
@@ -502,16 +508,19 @@
  <tile id="99">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="100">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="101">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="exit" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="102">

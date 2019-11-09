@@ -1,10 +1,12 @@
 import Phaser from 'phaser';
 
+import mountainTileset from '../assets/tilesets/mountain.png';
 import tiles from '../assets/tilesets/cave.png';
 import cave from '../assets/tilemaps/cave.json';
 import spriteJson from '../assets/sprites/dwarf_sprite.json';
 import dwarf from '../assets/sprites/dwarf_sprite.png';
 import dwarfKnight from '../assets/dwarf_knight.jpg';
+import mountain from '../assets/tilemaps/mountain.json';
 
 class Boot extends Phaser.Scene {
   constructor() {
@@ -37,8 +39,13 @@ class Boot extends Phaser.Scene {
     });
 
     this.load.image('background', dwarfKnight);
+
     this.load.image('tiles', tiles);
     this.load.tilemapTiledJSON('map', cave);
+
+    this.load.image('mountainTiles', mountainTileset);
+    this.load.tilemapTiledJSON('mountain', mountain);
+
     this.load.atlas('dwarf', dwarf, spriteJson);
   }
 

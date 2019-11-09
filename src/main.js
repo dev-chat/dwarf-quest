@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import Boot from './scenes/Boot';
 import Cave from './scenes/Cave';
 import Menu from './scenes/Menu';
+import Mountain from './scenes/Mountain';
 
 const config = {
   type: Phaser.AUTO,
@@ -15,7 +16,7 @@ const config = {
       gravity: { y: 0 }
     }
   },
-  scene: [Boot, Menu, Cave]
+  scene: [Boot, Menu, Cave, Mountain]
 };
 
 const game = new Phaser.Game(config);
