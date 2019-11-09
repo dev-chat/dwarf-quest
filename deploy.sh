@@ -1,6 +1,6 @@
 #!/bin/sh
 npm run build
-
-git add dist -f && git commit -m "dist subtree commit" --no-verify
-
-git subtree push --prefix dist origin gh-pages
+cd dist
+git add --all
+git commit -m "$(git log '--format=format:%H' master -1)"
+git push origin gh-pages --force
