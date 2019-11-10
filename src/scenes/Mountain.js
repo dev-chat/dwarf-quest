@@ -18,9 +18,6 @@ class Mountain extends Phaser.Scene {
     // Phaser's cache (i.e. the name you used in preload)
     const tileset = map.addTilesetImage('mountain', 'mountainTiles');
 
-    // // We can combine layers here to create multi layer levels
-    // const worldLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
-
     const belowLayer = map.createStaticLayer('Ground', tileset, 0, 0);
     const worldLayer = map.createStaticLayer('World', tileset, 0, 0);
 
@@ -33,10 +30,12 @@ class Mountain extends Phaser.Scene {
           this.scene.start('cave', { fromMountain: true });
         });
       }
-      // attach the listener here
+      if (tile.properties.collides) {
+        worldLayer.setTileIndexCallback(tile.index, () => {
+          this.player.body.setVelocity(0);
+        });
+      }
     });
-
-    // const debug = this.add.graphics();
 
     this.player = new Dwarf({
       scene: this,

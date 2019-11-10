@@ -37,6 +37,12 @@ class Cave extends Phaser.Scene {
           this.scene.start('mountain');
         });
       }
+      if (tile.properties.collides) {
+        console.log('foo');
+        worldLayer.setTileIndexCallback(tile.index, () => {
+          this.player.body.setVelocity(0);
+        });
+      }
     });
 
     // const debug = this.add.graphics();
