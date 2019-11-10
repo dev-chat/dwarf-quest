@@ -38,7 +38,6 @@ class Cave extends Phaser.Scene {
         });
       }
       if (tile.properties.collides) {
-        console.log('foo');
         worldLayer.setTileIndexCallback(tile.index, () => {
           this.player.body.setVelocity(0);
         });
